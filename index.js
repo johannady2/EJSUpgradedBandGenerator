@@ -4,6 +4,58 @@ import bodyParser from "body-parser";
 const app = express();
 const port = 3000;
 
+app.use(express.static("public"));
+
+
+
+const getTemplateData = (getOrPost) =>
+{
+      let finalHeaderText = headerGenerator(getOrPost, adj,noun);
+      let currentYear = new Date().getFullYear();
+  
+
+      return {
+      publicHeaderText: finalHeaderText,
+      publicCurrentYear: currentYear,
+      };
+}
+
+const headerGenerator = (getOrPost, adjectiveArray, nounArray) =>
+{
+
+
+    let headerText = "Welcome to the Band Name Generator!";
+    
+
+      // Get the random item using the index
+      let randomAdj = adjectiveArray[Math.floor(Math.random() * adjectiveArray.length)];
+      let randomNoun = nounArray[Math.floor(Math.random() * nounArray.length)];
+   
+          if(getOrPost != "get" && (randomAdj && randomNoun))
+          {
+              headerText = randomAdj+" "+randomNoun;
+           
+          }
+          else
+          {
+              headerText == "Welcome to the Band Name Generator!";
+          }
+       
+      return headerText;
+}
+
+
+
+
+app.post("/submit", (req, res) =>
+{
+
+  res.render("index.ejs", getTemplateData("post"));
+
+});
+
+
+
 //Step 3 - Make the styling show up.
 //Hint 1: CSS files are static files!
 //Hint 2: The header and footer are partials.
@@ -15,10 +67,11 @@ const port = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  //Step 1 - Make the get route work and render the index.ejs file.
+
+    res.render("index.ejs", getTemplateData("get"));
 });
 
-app.post("/submit", (req, res) => {
+//app.post("/submit", (req, res) => {
   //Step 2 - Make the generate name functionality work
   //Hint: When the "Generate Name" button in index.ejs is clicked, it should hit up this route.
   //Then:
@@ -26,7 +79,7 @@ app.post("/submit", (req, res) => {
   //scroll down to see the two arrays.
   //2. Send the index.ejs as a response and add the adjective and noun to the res.render
   //3. Test to make sure that the random words display in the h1 element in index.ejs
-});
+//});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
