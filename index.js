@@ -5,6 +5,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const getTemplateData = (getOrPost) =>
 {
@@ -30,8 +31,7 @@ const headerGenerator = (getOrPost, adjectiveArray, nounArray) =>
    
           if(getOrPost != "get" && (randomAdj && randomNoun))
           {
-              headerText = randomAdj+" "+randomNoun;
-           
+              headerText = randomAdj+" "+randomNoun;S
           }
           else
           {
@@ -43,15 +43,10 @@ const headerGenerator = (getOrPost, adjectiveArray, nounArray) =>
 
 app.post("/submit", (req, res) =>
 {
-
-  res.render("index.ejs", getTemplateData("post"));
-
+  res.render("index.ejs", getTemplateData("post"));S
 });
 
-app.use(bodyParser.urlencoded({ extended: true }));
-
 app.get("/", (req, res) => {
-
     res.render("index.ejs", getTemplateData("get"));
 });
 
