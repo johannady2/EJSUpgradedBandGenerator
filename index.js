@@ -31,7 +31,7 @@ const headerGenerator = (getOrPost, adjectiveArray, nounArray) =>
    
           if(getOrPost != "get" && (randomAdj && randomNoun))
           {
-              headerText = randomAdj+" "+randomNoun;S
+              headerText = randomAdj+" "+randomNoun;
           }
           else
           {
